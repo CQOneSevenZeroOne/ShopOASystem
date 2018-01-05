@@ -36,8 +36,30 @@ app.get("/sellerinfo_admin/find",function(req,res){
 				res.send(JSON.stringify(results));
 			})
 })
-//对seller表进行删除操作
+//对seller表进行状态修改操作
 app.get("/sellerinfo_admin/delete",function(req,res){
+	 res.append("Access-Control-Allow-Origin","*");
+	 var id = req.query.sellerId;
+	 var sql = "update seller set sellerStatus=2 where sellerId="+id;
+	 connection.query(sql,function(error,results,fields){
+				if (error) throw error;
+				res.send("success");
+				
+		})
+})
+//对seller表进行审核操作的同意
+app.get("/sellerinfo_admin/exam/agree",function(req,res){
+	 res.append("Access-Control-Allow-Origin","*");
+	 var id = req.query.sellerId;
+	 var sql = "update seller set sellerStatus=1 where sellerId="+id;
+	 connection.query(sql,function(error,results,fields){
+				if (error) throw error;
+				res.send("success");
+				
+		})
+})
+//对seller表进行审核操作的拒绝
+app.get("/sellerinfo_admin/exam/regect",function(req,res){
 	 res.append("Access-Control-Allow-Origin","*");
 	 var id = req.query.sellerId;
 	 var sql = "delete from seller where sellerId="+id;
