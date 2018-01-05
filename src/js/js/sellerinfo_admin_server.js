@@ -17,6 +17,22 @@ app.get("/sellerinfo_admin",function(req,res){
 				res.send(JSON.stringify(results));
 		})
 })
+//对user表的所有数据提取
+app.get("/userinfo_admin",function(req,res){
+	 res.append("Access-Control-Allow-Origin","*");
+	 connection.query(`select * from userinfo`,function(error,results,fields){
+				if (error) throw error;
+				res.send(JSON.stringify(results));
+		})
+})
+//对user表的所有数据提取
+app.get("/goodinfo_admin",function(req,res){
+	 res.append("Access-Control-Allow-Origin","*");
+	 connection.query(`select * from good`,function(error,results,fields){
+				if (error) throw error;
+				res.send(JSON.stringify(results));
+		})
+})
 //对seller表进行查询操作
 app.get("/sellerinfo_admin/find",function(req,res){
 	 res.append("Access-Control-Allow-Origin","*");
@@ -25,6 +41,44 @@ app.get("/sellerinfo_admin/find",function(req,res){
 			if(i=="sellerId"  ||  i=="sellerStatus"){
 				sql+=i+"="+req.query[i]+" and ";
 			}else if(i=="sellerName"  ||  i=="sellerAddress"){
+				sql+=i+" like '%"+req.query[i]+"%' and ";
+			}else{
+				sql+=i+"='"+req.query[i]+"' and ";
+			}
+		}
+		var sql = sql.substr(0,sql.length-4);
+			connection.query(sql,function(error,results,fields){
+				if (error) throw error;
+				res.send(JSON.stringify(results));
+			})
+})
+//对userinfo表进行查询操作
+app.get("/userinfo_admin/find",function(req,res){
+	 res.append("Access-Control-Allow-Origin","*");
+	var sql="select * from userinfo where ";
+		for(var i in req.query){
+			if(i=="userId"  ||  i=="sex"){
+				sql+=i+"="+req.query[i]+" and ";
+			}else if(i=="userName"  ||  i=="userAddress"){
+				sql+=i+" like '%"+req.query[i]+"%' and ";
+			}else{
+				sql+=i+"='"+req.query[i]+"' and ";
+			}
+		}
+		var sql = sql.substr(0,sql.length-4);
+			connection.query(sql,function(error,results,fields){
+				if (error) throw error;
+				res.send(JSON.stringify(results));
+			})
+})
+//对userinfo表进行查询操作
+app.get("/goodinfo_admin/find",function(req,res){
+	 res.append("Access-Control-Allow-Origin","*");
+	var sql="select * from good where ";
+		for(var i in req.query){
+			if(i=="goodId"  ||  i=="goodSatus" || i=="stock" || i=="saleNum" || i=="sellerId"){
+				sql+=i+"="+req.query[i]+" and ";
+			}else if(i=="goodName"){
 				sql+=i+" like '%"+req.query[i]+"%' and ";
 			}else{
 				sql+=i+"='"+req.query[i]+"' and ";

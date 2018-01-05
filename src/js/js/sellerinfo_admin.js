@@ -24,10 +24,22 @@ $(".butt").on("click",function(){
 		obj.sellerName=$("#sellerName").val();
 	}
 	if($("#sellerId").val()!=""){
-		obj.sellerId=$("#sellerId").val();
+		if( /^[0-9]{1,}$/.test($("#sellerId").val())){
+			obj.sellerId=$("#sellerId").val();
+		}else{
+			layui.use('layer', function(){ 
+			layer.msg('电商输入格式不正确,搜索商品ID无效');
+		})
+		}
 	}
 	if($("#sellerPhone").val()!=""){
-		obj.sellerPhone=$("#sellerPhone").val();
+		if( /^[0-9]{1,}$/.test($("#sellerPhone").val())){
+			obj.sellerId=$("#sellerPhone").val();
+		}else{
+			layui.use('layer', function(){ 
+			layer.msg('电话输入格式不正确,搜索电话无效');
+		})
+		}
 	}
 	if($("#sellerAddress").val()!=""){
 		obj.sellerAddress=$("#sellerAddress").val();
@@ -156,7 +168,9 @@ function clickagree(){
 //将数据库中的信息插入到页面中
 function getList(arr){
 	if(arr.length==0){
-		$("#table_list").html("<div>没有用户</div>");
+		layui.use('layer', function(){ 
+			layer.msg('未查询到相关用户信息');
+		})
 	}else{
 		layui.use('laypage', function(){
 				  var laypage = layui.laypage;
@@ -166,7 +180,6 @@ function getList(arr){
 				    count: arr.length, //数据总数，从服务端得到
 				    limit:6,
 				    groups:2,
-				    theme:'#BB1D2B' ,
 				    jump: function(obj, first){
 				    	//obj.curr得到当前页，以便向服务端请求对应页的数据。
 						//obj.limit得到每页显示的条数

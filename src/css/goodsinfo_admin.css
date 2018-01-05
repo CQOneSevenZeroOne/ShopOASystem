@@ -10,9 +10,13 @@
 	margin-top:10px;
 }
 .layui-input-block>.layui-input{
-	width:250px;
+	width:200px;
 }
-.layui-form-label:nth-of-type(2n+1){
+.layui-form-pane .layui-input-block{
+	margin-left:0px;
+	float: left;
+}
+.layui-form-label:nth-of-type(3n+1){
 	clear: left;
 }
 .layui-form-label {
@@ -22,13 +26,12 @@
 	width:auto;
 	margin-top:10px;
 }
-.layui-input-block{
-	marker: 10px;;
-}
-.butt{
-	float: left;
-	margin-left:70px;
+.layui-input-inline{
 	margin-top:10px;
+
+}
+#butt{
+	
 	height:38px;
 	line-height: 38px;
 	padding:0 18px;
@@ -39,17 +42,19 @@
 	border:0;
 	outline: none;
 }
+.butt_bc{
+	position: absolute;
+	top:68px;
+	right:283px;
+}
 .radio>input{
 	margin:14px 4px 0px 20px;
 }
 .layui-table[lay-size=sm] td{
 	padding:5px 0;
-	padding-left:5px;
+	padding-left:10px;
 }
-table tr strong{
-	color:#007DDB;
-	padding:0 10px;
-}
+
 table img{
 	display: block;
 	width:50px;
@@ -60,4 +65,15 @@ table{
 }
 #table_page{
 	float:right;
+}
+
+select{
+	float: left;
+}
+.layui-input-block i{
+	float: left;
+	padding:10px 2px 0 2px;
+}
+.layui-unselect .layui-form-select{
+	width:100px;
 }
