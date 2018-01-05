@@ -28,7 +28,7 @@ app.get('/orderlist', function(req, res) {
         res.send(data)
     });
 });
-app.get('/orderlist/search', function(req, res) {
+app.get('/orderlist/searchOrder', function(req, res) {
     res.append("Access-Control-Allow-Origin","*");
     var sql="SELECT a.* ,b.*,c.* ,d.sellerId from orderinfo AS a,good AS b,userinfo as c,seller AS d  WHERE a.goodId=b.goodId AND a.userId=c.userId AND ";
     for(var i in req.query){
@@ -48,9 +48,6 @@ app.get('/orderlist/search', function(req, res) {
             sql+="a.reciveAddress like '%"+req.query.quiz1+"%' AND ";
         }
     }
-    //console.log(cookId)
-    //var sql="SELECT a.* ,b.*,c.* ,d.sellerId from orderinfo AS a,good AS b,userinfo as c,seller AS d  WHERE a.goodId=b.goodId AND a.userId=c.userId AND d.sellerId="+cookId+"AND a.orderId="+orderidtext;//+"AND c.userName like '%"+usernametext+"%' AND a.orderTime="+ordertimetext+"a.reciveAddress like '%"+quiz1+"%'";
-    //var sql="SELECT a.* ,b.*,c.* ,d.sellerId from orderinfo AS a,good AS b,userinfo as c,seller AS d  WHERE a.goodId=b.goodId AND a.userId=c.userId AND d.sellerId="+cookId+" AND a.orderId="+orderidtext+"AND c.userName LIKE '%"+usernametext+"%'";
     sql=sql.slice(0,sql.length-5);
     connection.query(sql, function (error, results, fields) {
         if (error) throw error;
@@ -59,19 +56,15 @@ app.get('/orderlist/search', function(req, res) {
         res.send(data)
     });
 });
-/*app.get('/orderlist/searchByuserName', function(req, res) {
+app.get('/orderlist/editOrder', function(req, res) {
     res.append("Access-Control-Allow-Origin","*");
-    var cookId=req.query.cookId;
-    var usernametext=Number.parseInt(req.query.usernametext);
+    var orderIdedit=req.query.orderIdedit;
     //console.log(cookId)
-    var sql='SELECT a.* ,b.*,c.* ,d.sellerId from orderinfo AS a,good AS b,userinfo as c,seller AS d  WHERE a.goodId=b.goodId AND a.userId=c.userId AND d.sellerId='+cookId+' AND c.userName='+usernametext;
-    console.log(sql)
+    var sql="UPDATE orderinfo SET orderStatus=0 WHERE orderinfo.orderId ="+orderIdedit;
     connection.query(sql, function (error, results, fields) {
         if (error) throw error;
-        var data=JSON.stringify(results);
-        //console.log(data)
-        res.send(data)
+        res.send("success")
     });
-});*/
+});
 app.listen(1701)
 console.log('开启服务器')

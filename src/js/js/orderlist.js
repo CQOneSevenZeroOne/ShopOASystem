@@ -12,14 +12,6 @@ layui.use(['form', 'layedit', 'laydate'], function(){
   laydate.render({
     elem: '#date1'
   });
-  
-  //监听提交
-  /*form.on('submit(demo1)', function(data){
-    layer.alert(JSON.stringify(data.field),{
-      title: '最终的提交信息'
-    })
-    return false;
-  });*/
 });
 
 //功能
@@ -56,7 +48,7 @@ $.ajax({
   }else{
     $("#orderListbtn").click(function(){
       $.ajax({
-        url:"http://localhost:1701/orderlist/search",
+        url:"http://localhost:1701/orderlist/searchOrder",
         type:"GET",
         data:{
           "cookId":JSON.parse($.cookie("statuscookie")).id,
@@ -95,8 +87,6 @@ function showOrder(data){
       data[i].orderStatus="待处理";
     }
     addressorder.push('<option value="'+data[i].reciveAddress.slice(0, 2)+'" >'+data[i].reciveAddress.slice(0, 2)+'</option>');
-    //address2+='<option value="'+data[i].reciveAddress.slice(3, 6)+'" >'+data[i].reciveAddress.slice(3, 6)+'</option>';
-    //address3+='<option value="'+data[i].reciveAddress.slice(7)+'" >'+data[i].reciveAddress.slice(7)+'</option>';
     str+='<tr><td>'+data[i].orderId+'</td><td>'+data[i].userName+'</td><td>'+data[i].goodId+'</td><td>'+data[i].goodName+'</td><td>'+data[i].goodSize+'</td><td>'+data[i].goodColor+'</td><td>'+data[i].goodCount+'</td><td>'+data[i].orderStatus+'</td><td>'+data[i].orderTime+'</td><td>'+data[i].reciveAddress+'</td><td class="recevicebtn">接单</td></tr>';
   }
   $(".layui-table>tbody").html(str);
@@ -105,18 +95,37 @@ function showOrder(data){
     address1+=addressorder[j];
   }
   $("#quiz1").html($("#quiz1").html()+address1);
-  /*$("#quiz2").html($("#quiz2").html()+address2);
-  $("#quiz3").html($("#quiz3").html()+address3);*/
 
   //接单事件
-  for(var k=0;k<$(".recevicebtn").length;k++){
-    $(this).click(function(){
-      var orderIdedit=$(this).parent().children().eq(0).html();
-      console.log(orderIdedit)
+  for(var i=0;i<$(".recevicebtn").length;i++){
+    $(".recevicebtn").eq(i).click(function(){
+      if($(this).parent().children().eq(7).html()=="待处理"){
+        var orderIdedit=$(this).parent().children().eq(0).html();
+        //console.log(orderIdedit);
+        var _this=this;
+        $.ajax({
+          url:"http://localhost:1701/orderlist/editOrder",
+          type:"GET",
+          data:{
+            "orderIdedit":orderIdedit
+          },
+          success:function(data){
+            if(data=="success"){
+              layui.use(['layer'], function(){
+                layer.msg("成功接单");
+              });
+              $(_this).parent().children().eq(7).html("已完成");
+            }
+          }
+        })
+      }else{
+        layui.use(['layer'], function(){
+          layer.msg("该订单已完成");
+        })
+      }
     });
   }
 }
-
 function norepeatorder(arr){
   var newArr = [];
   for(var i in arr){
