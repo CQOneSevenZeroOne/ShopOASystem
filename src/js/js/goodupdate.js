@@ -14,7 +14,7 @@ $("#searchls").click(function(e){
 $("tbody").on("dblclick","td",function(e){
 	e.preventDefault();
 	var _this = this;
-	if($(this).attr("id")!="update"&&$(this).index()!=4&&$(this).index()!=4&&$(this).index!=9){
+	if($(this).attr("id")!="update"&&$(this).index()!=0&&$(this).index()!=4&&$(this).index()!=9){
 		var val = $(this).html();
 		var str = `
 			<input type="text" style="border:0;width:60px;" value=${val}>
@@ -26,6 +26,8 @@ $("tbody").on("dblclick","td",function(e){
 			$(_this).children().eq(0).remove();
 			$(_this).html(value);
 		})
+	}else{
+		alert("此项不可修改");
 	}
 })
 
