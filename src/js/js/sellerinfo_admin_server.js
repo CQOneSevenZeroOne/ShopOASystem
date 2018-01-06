@@ -143,4 +143,20 @@ app.post("/reg_admin",function(req,res){
 				
 		})
 })
+
+//电商的登录
+app.post("/reg_seller",function(req,res){
+	res.append("Access-Control-Allow-Origin","*");
+	//req.body是post传输的数据
+	var sql="select sellerId,sellerName from seller where "
+	for(var i in req.body){
+		sql+=i+"='"+req.body[i] +"'and ";
+	}
+	sql = sql.substr(0,sql.length-4);
+	 connection.query(sql,function(error,results,fields){
+				if (error) throw error;
+				res.send(JSON.stringify(results));
+				
+		})
+})
 app.listen(1701);

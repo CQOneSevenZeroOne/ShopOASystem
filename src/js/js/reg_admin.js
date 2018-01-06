@@ -23,7 +23,7 @@ $("#but_ad").click(function(){
 			},
            	success: function (data) {
                    var arr = JSON.parse(data)[0];	
-                   if(arr.length==0){
+                   if(arr==null){
 	                  	layui.use('layer', function(){ 
 							layer.msg('用户或密码不正确，请重新输入');
 						})
@@ -35,6 +35,38 @@ $("#but_ad").click(function(){
 							layer.msg('登录成功');
 						})
                    		location.href=encodeURI("userinfo_admin1.html" ,"utf-8");
+                   }
+                }
+})
+})
+
+$("#but_go").click(function(){
+	var user = $("#username_go").val();
+	var pass = $("#password_go").val();
+	$.ajax({
+			url:"http://localhost:1701/reg_seller",
+			type:"POST",
+			data:{
+				sellerName:user,
+				sellerPass:pass
+			},
+           	success: function (data) {
+                   var arr = JSON.parse(data)[0];	
+                   if(arr==null){
+	                  	layui.use('layer', function(){ 
+							layer.msg('用户或密码不正确，请重新输入');
+						})
+                   }else{
+                   		var obj={
+                   			"name":arr.sellerName,
+                   			"id":arr.sellerId
+                   		};
+                   		console.log(obj);
+                   		$.cookie("seller",JSON.stringify(obj));
+                   		layui.use('layer', function(){ 
+							layer.msg('登录成功');
+						})
+                   		location.href=encodeURI("goodsinfo1.html" ,"utf-8");
                    }
                 }
 })
