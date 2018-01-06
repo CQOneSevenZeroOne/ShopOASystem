@@ -19,6 +19,7 @@ layui.use(['form', 'layedit', 'laydate'], function(){
 //$.cookie("statuscookie",JSON.stringify(obj));
 //console.log(JSON.parse($.cookie("statuscookie")).id);
 //无条件显示所有信息
+var datacon={};
   $.ajax({
     url:"http://localhost:1701/orderlist",
     type:"GET",
@@ -26,8 +27,8 @@ layui.use(['form', 'layedit', 'laydate'], function(){
       "cookId":JSON.parse($.cookie("seller")).id
     },
     success:function(data){
-        data=JSON.parse(data);
-        showOrder(data);
+        datacon=JSON.parse(data);
+        showOrder(datacon);
     }
   })
   //条件查询
@@ -40,8 +41,8 @@ layui.use(['form', 'layedit', 'laydate'], function(){
             "cookId":JSON.parse($.cookie("seller")).id
           },
           success:function(data){
-              data=JSON.parse(data);
-              showOrder(data);
+              datacon=JSON.parse(data);
+              showOrder(datacon);
           }
       })
   }else{
@@ -62,9 +63,8 @@ layui.use(['form', 'layedit', 'laydate'], function(){
               layer.msg("未找到相关信息");
             })
           }else{
-            data=JSON.parse(data);
-            var str='';
-            showOrder(data);
+            datacon=JSON.parse(data);
+            showOrder(datacon);
           }
         }
       })
@@ -103,17 +103,12 @@ layui.use(['laypage', 'layer'], function(){
         });
         return arr.join('');
       }();
+      OrderRecevice();
     }
   });
-});
-  addressorder=norepeatorder(addressorder);
-  for(var j=0;j<addressorder.length;j++){
-    address1+=addressorder[j];
-  }
-  $("#quiz1").html($("#quiz1").html()+address1);
-
   //接单事件
-  for(var i=0;i<$(".recevicebtn").length;i++){
+  function OrderRecevice(){
+    for(var i=0;i<$(".recevicebtn").length;i++){
     $(".recevicebtn").eq(i).click(function(){
       if($(this).parent().children().eq(7).html()=="待处理"){
         var orderIdedit=$(this).parent().children().eq(0).html();
@@ -131,6 +126,8 @@ layui.use(['laypage', 'layer'], function(){
                 layer.msg("成功接单");
               });
               $(_this).parent().children().eq(7).html("已完成");
+              datacon.eq($(_this).parent().index()).orderStatus="已完成";
+              console.log(datacon)
             }
           }
         })
@@ -140,7 +137,13 @@ layui.use(['laypage', 'layer'], function(){
         })
       }
     });
+  }}
+});
+  addressorder=norepeatorder(addressorder);
+  for(var j=0;j<addressorder.length;j++){
+    address1+=addressorder[j];
   }
+  $("#quiz1").html($("#quiz1").html()+address1); 
 }
 function norepeatorder(arr){
   var newArr = [];
