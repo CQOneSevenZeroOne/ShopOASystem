@@ -20,8 +20,13 @@ $("#addls").click(function(){
 			},
 			success:function(data){
 				layui.use('layer', function(){ 
-			layer.msg(data);
-		})
+				layer.msg(data);
+				})
+				if(data=="添加成功"){
+					for(var i=0;i<t.length;i++){
+						t.eq(i).val("");
+					}
+				}
 			}
 		})
 	}else{
