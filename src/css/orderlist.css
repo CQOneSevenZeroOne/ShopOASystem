@@ -9,7 +9,7 @@
 #orderinfo .layui-inline{margin-right:70px;margin-bottom:10px;}
 #readress{width:800px;}
 #btnbg{width:65px;position:absolute;left:610px;top:137px;}
-#orderlistcon{margin-left:30px;width:1180px;text-align:center;}
+#orderlistcon{padding:0 30px;text-align:center;}
 #orderlistcon table th{text-align: center;}
 #orderListbtn{
 	display: inline-block;
@@ -34,3 +34,4 @@
     font-weight: inherit;
 }
 .recevicebtn{color:#007DDB;font-weight: 700;cursor: pointer;}
+#demo20{float: right;}

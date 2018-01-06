@@ -15,22 +15,21 @@ layui.use(['form', 'layedit', 'laydate'], function(){
 });
 
 //功能
-var obj={'id':1,'type':"seller"};
-$.cookie("statuscookie",JSON.stringify(obj));
+//var obj={'id':1,'type':"seller"};
+//$.cookie("statuscookie",JSON.stringify(obj));
 //console.log(JSON.parse($.cookie("statuscookie")).id);
 //无条件显示所有信息
-$.ajax({
+  $.ajax({
     url:"http://localhost:1701/orderlist",
     type:"GET",
     data:{
-      "cookId":JSON.parse($.cookie("statuscookie")).id
+      "cookId":JSON.parse($.cookie("seller")).id;
     },
     success:function(data){
         data=JSON.parse(data);
         showOrder(data);
-
     }
-})
+  })
   //条件查询
   if($("#orderidtext").val()=='' && $("#usernametext").val()=='' && $("#usernametext").val()=='' && $('#ordertimetext').html()=='' && $("#quiz1").val()=='' && $("#quiz2").val()){
       //无条件显示所有信息
@@ -38,7 +37,7 @@ $.ajax({
           url:"http://localhost:1701/orderlist",
           type:"GET",
           data:{
-            "cookId":JSON.parse($.cookie("statuscookie")).id
+            "cookId":JSON.parse($.cookie("seller")).id
           },
           success:function(data){
               data=JSON.parse(data);
@@ -51,12 +50,11 @@ $.ajax({
         url:"http://localhost:1701/orderlist/searchOrder",
         type:"GET",
         data:{
-          "cookId":JSON.parse($.cookie("statuscookie")).id,
+          "cookId":JSON.parse($.cookie("seller")).id,
           "orderidtext":$("#orderidtext").val(),
           "usernametext":$("#usernametext").val(),
           "ordertimetext":$('#date1').val(),
-          "quiz1":$("#quiz1").val()//,
-          //"quiz2":$("#quiz2").val()
+          "quiz1":$("#quiz1").val()
         },
         success:function(data){
           if(JSON.parse(data).length==0){
@@ -77,8 +75,6 @@ function showOrder(data){
   var str='';
   var address1='';
   var addressorder=[];
-  //var address2='';
-  //var address3='';
   for(var i=0;i<data.length;i++){
     if(data[i].orderStatus==0){
       data[i].orderStatus="已完成"
@@ -87,9 +83,29 @@ function showOrder(data){
       data[i].orderStatus="待处理";
     }
     addressorder.push('<option value="'+data[i].reciveAddress.slice(0, 2)+'" >'+data[i].reciveAddress.slice(0, 2)+'</option>');
-    str+='<tr><td>'+data[i].orderId+'</td><td>'+data[i].userName+'</td><td>'+data[i].goodId+'</td><td>'+data[i].goodName+'</td><td>'+data[i].goodSize+'</td><td>'+data[i].goodColor+'</td><td>'+data[i].goodCount+'</td><td>'+data[i].orderStatus+'</td><td>'+data[i].orderTime+'</td><td>'+data[i].reciveAddress+'</td><td class="recevicebtn">接单</td></tr>';
   }
-  $(".layui-table>tbody").html(str);
+  //分页
+layui.use(['laypage', 'layer'], function(){
+  var laypage = layui.laypage
+  ,layer = layui.layer;
+  //调用分页
+  laypage.render({
+    elem: 'demo20',
+    count: data.length,
+    limit:5,
+    jump: function(obj){
+      //模拟渲染
+      document.getElementById('biuuu_city_list').innerHTML = function(){
+        var arr = []
+        ,thisData = data.concat().splice(obj.curr*obj.limit - obj.limit, obj.limit);
+        layui.each(thisData, function(index, item){
+          arr.push('<tr><td>'+item.orderId+'</td><td>'+item.userName+'</td><td>'+item.goodId+'</td><td>'+item.goodName+'</td><td>'+item.goodSize+'</td><td>'+item.goodColor+'</td><td>'+item.goodCount+'</td><td>'+item.orderStatus+'</td><td>'+item.orderTime+'</td><td>'+item.reciveAddress+'</td><td class="recevicebtn">接单</td></tr>');
+        });
+        return arr.join('');
+      }();
+    }
+  });
+});
   addressorder=norepeatorder(addressorder);
   for(var j=0;j<addressorder.length;j++){
     address1+=addressorder[j];
