@@ -15,6 +15,9 @@
 	margin-left: 20px;
 	float: left;
 }
+#fo #addls{
+	margin-left:222px;
+}
 #down,#update{
 	cursor: pointer;
 }

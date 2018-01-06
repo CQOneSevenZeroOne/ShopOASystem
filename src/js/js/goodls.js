@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //获取所有的商品信息
-app.get('/', function(req, res) {
+app.get('/goodinfo', function(req, res) {
     res.append("Access-Control-Allow-Origin","*");
    var query = url.parse(req.url).query;
 	var obj = querystring.parse(query);
@@ -31,7 +31,7 @@ app.get('/', function(req, res) {
 });
 
 //根据名字查找对应的商品
-app.post('/search', function(req, res) {
+app.post('/goodsearch', function(req, res) {
     res.append("Access-Control-Allow-Origin","*");
 	/*console.log(req.body);*/
 	connection.query(`select * from good where goodName like '%${req.body.name}%' and sellerId=1`,function(error,result){
@@ -46,7 +46,7 @@ app.post('/search', function(req, res) {
 });
 
 //根据id查找对应商品
-app.post('/searchId', function(req, res) {
+app.post('/goodsearchId', function(req, res) {
     res.append("Access-Control-Allow-Origin","*");
 	/*console.log(req.body);*/
 	connection.query(`select * from good where goodId = ${req.body.name} and sellerId=1 `,function(error,result){
@@ -81,7 +81,7 @@ app.post('/searchId', function(req, res) {
 	});
 });
 //下架商品
-app.post("/down",function(req,res){
+app.post("/gooddown",function(req,res){
 	 res.append("Access-Control-Allow-Origin","*");
 	 connection.query(`update good set goodStatus = '0' where goodId='${req.body.id}'`,function(error,result){
 	 	if(error) throw error;
@@ -90,7 +90,7 @@ app.post("/down",function(req,res){
 })
 
 //更改信息
-app.post("/update",function(req,res){
+app.post("/goodupdate",function(req,res){
 	res.append("Access-Control-Allow-Origin","*");
 	if(req.body.status!=0&&req.body.status!=1){
 		req.body.status=1;
@@ -98,9 +98,31 @@ app.post("/update",function(req,res){
 	connection.query(`update good set goodName = '${req.body.name}',goodType='${req.body.type}',goodStatus='${req.body.status}',goodPrice='${req.body.price}',stock='${req.body.stock}',saleNum='${req.body.salenum}',goodInfo='${req.body.message}',goodSize='${req.body.size}',goodColor='${req.body.color}',goodFare='${req.body.fare}' where goodId='${req.body.id}' and sellerId='${req.body.seller}'`);
 	res.send("success");
 })
+
+//添加商品
+app.post("/goodaddls",function(req,res){
+	res.append("Access-Control-Allow-Origin","*");
+	var r = req.body;
+	var reg = new RegExp("^(红|橙|黄|绿|蓝|靛|紫|黑|白)色$","gi");
+	var time = stringTime();
+	var stock = parseInt(r.stock);
+	/*console.log(reg.test(r.color));*/
+	if(r.price>=0&&stock>=0&&r.fare>=0){
+		if(reg.test(r.color)){
+			connection.query(`insert into good(goodName,goodType,goodStatus,pubDate,goodPrice,stock,saleNum,goodInfo,goodImg,goodSize,goodColor,goodFare,sellerId) values ('${r.name}','${r.type}',1,'${time}','${r.price}',${stock},0,'${r.info}','https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2076589134,289598735&fm=27&gp=0.jpg','${r.size}','${r.color}','${r.fare}',1)`,function(error,result){
+				if(error) throw error;
+				res.send("添加成功");
+			})
+		}else{
+			res.send("颜色输入不符合要求");
+		}
+	}else{
+		res.send("价格，库存，运费存在输入不符合要求");
+	}
+})
 app.listen(1701);
 console.log("开启服务器");
-
+//返回一串数据
 function restr(result){
 	var str = "";
 	for (var i in result){
@@ -125,4 +147,19 @@ function restr(result){
 			`
 			}
 	return str;
+}
+//获取年月日
+function stringTime(sign){
+	var d = new Date();
+	if(!sign){
+		sign = '-';
+	}
+	return d.getFullYear()+sign+buling(d.getMonth()+1)+sign+buling(d.getDate());
+}
+//补0
+function buling(num){
+	if(num<10){
+		num = '0'+num;
+	}
+	return num;
 }

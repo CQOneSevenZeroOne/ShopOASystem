@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>注册商家</title>
+</head>
+<body>
+	<div class="Box">
+	    <div class="add_content">
+	        <div class="content_head">
+	            <p>商家注册信息</p>
+	        </div>
+	        <div class="add_info">
+	            <p>商家名称：<input type="text" id="shop_name"><span id="shop_name_span" style="display: none;    margin-right: 55px;">名称已经存在，请重新输入</span></p>
+	            <p>密码：<input type="text" id="shop_password"></p>
+	            <p>注册时间：<input type="text" id="shop_time"></p>
+	            <p>商家简介：<input type="text" id="shop_introduce"></p>
+	            <p>商家地址：<input type="text" id="shop_place"></p>  
+	            <p>商家电话：<input type="text" id="shop_tel"></p>
+	            <form id="uploadForm">
+	            	<span>logo文件：</span>
+			        <input type="file" id="file" name="logo" multiple />
+			    </form>
+	            <div class="add_reg">确定注册</div>
+	        </div>
+	    </div>
+	    
+	</div>
+	<div class="mask" id="mask">
+    	<div class="mask1"></div>
+    	<div class="list">
+    		<span>注册成功！！</span>
+    		<p><a href="">登录</a></p>
+    	</div>
+    </div>
+</body>
+</html>
+
+
+<link rel="stylesheet" type="text/css" href="../css/regsi.css">
+<script type="text/javascript" src="../js/lib/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="../js/js/regsi.js"></script>

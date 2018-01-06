@@ -1,14 +1,11 @@
 	//点击按钮可以切换登录的信息
 	$(".nav>li").on("click",function(){
 		$(this).addClass("active").siblings().removeClass("active");
-
 		//console.log($(this).index())
 		$(".tab-pane").eq($(this).index()).addClass("active").siblings().removeClass("active");
 	})
 	//点击2按钮时，可以登录。
 	$("#sub").click(function(){
-		console.log($("#exampleInputname2").val())
-		console.log($("#exampleInputpassword2").val())
 		$.ajax({
 			url:"http://localhost:1701/sign/getName",
 			type:"post",
