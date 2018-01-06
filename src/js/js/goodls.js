@@ -148,7 +148,7 @@ function restr(result){
 			}
 	return str;
 }
-
+//获取年月日
 function stringTime(sign){
 	var d = new Date();
 	if(!sign){
@@ -156,6 +156,7 @@ function stringTime(sign){
 	}
 	return d.getFullYear()+sign+buling(d.getMonth()+1)+sign+buling(d.getDate());
 }
+//补0
 function buling(num){
 	if(num<10){
 		num = '0'+num;

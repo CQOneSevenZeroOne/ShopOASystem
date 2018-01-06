@@ -23,6 +23,7 @@ $("#addls").click(function(){
 		})
 	}
 })
+
 //判断是否有空值
 function isNull(t){
 	var flag = true;
