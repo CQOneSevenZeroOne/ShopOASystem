@@ -1,6 +1,6 @@
 $.ajax({
 	type:"GET",
-	url:"http://localhost:1701/",
+	url:"http://localhost:1701/goodinfo",
 	success:function(data){
 		$("tbody").html(data);
 	}
@@ -10,7 +10,7 @@ $("#searchls").click(function(e){
 	e.preventDefault();
 	$.ajax({
 		type:"POST",
-		url:"http://localhost:1701/search",
+		url:"http://localhost:1701/goodsearch",
 		data:{
 			name:$("#txt").val()
 		},
@@ -27,7 +27,7 @@ $("tbody").on("click","#down",function(){
 	if(status==1){
 		$.ajax({
 			type:"POST",
-			url:"http://localhost:1701/down",
+			url:"http://localhost:1701/gooddown",
 			data:{
 				id:$(this).parent().children().eq(0).html(),
 			},

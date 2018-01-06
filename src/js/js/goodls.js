@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //获取所有的商品信息
-app.get('/', function(req, res) {
+app.get('/goodinfo', function(req, res) {
     res.append("Access-Control-Allow-Origin","*");
    var query = url.parse(req.url).query;
 	var obj = querystring.parse(query);
@@ -31,7 +31,7 @@ app.get('/', function(req, res) {
 });
 
 //根据名字查找对应的商品
-app.post('/search', function(req, res) {
+app.post('/goodsearch', function(req, res) {
     res.append("Access-Control-Allow-Origin","*");
 	/*console.log(req.body);*/
 	connection.query(`select * from good where goodName like '%${req.body.name}%' and sellerId=1`,function(error,result){
@@ -46,7 +46,7 @@ app.post('/search', function(req, res) {
 });
 
 //根据id查找对应商品
-app.post('/searchId', function(req, res) {
+app.post('/goodsearchId', function(req, res) {
     res.append("Access-Control-Allow-Origin","*");
 	/*console.log(req.body);*/
 	connection.query(`select * from good where goodId = ${req.body.name} and sellerId=1 `,function(error,result){
@@ -81,7 +81,7 @@ app.post('/searchId', function(req, res) {
 	});
 });
 //下架商品
-app.post("/down",function(req,res){
+app.post("/gooddown",function(req,res){
 	 res.append("Access-Control-Allow-Origin","*");
 	 connection.query(`update good set goodStatus = '0' where goodId='${req.body.id}'`,function(error,result){
 	 	if(error) throw error;
@@ -90,7 +90,7 @@ app.post("/down",function(req,res){
 })
 
 //更改信息
-app.post("/update",function(req,res){
+app.post("/goodupdate",function(req,res){
 	res.append("Access-Control-Allow-Origin","*");
 	if(req.body.status!=0&&req.body.status!=1){
 		req.body.status=1;
@@ -100,7 +100,7 @@ app.post("/update",function(req,res){
 })
 
 //添加商品
-app.post("/addls",function(req,res){
+app.post("/goodaddls",function(req,res){
 	res.append("Access-Control-Allow-Origin","*");
 	var r = req.body;
 	var reg = new RegExp("^(红|橙|黄|绿|蓝|靛|紫|黑|白)色$","gi");

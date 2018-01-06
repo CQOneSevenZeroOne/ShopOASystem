@@ -6,7 +6,7 @@ $("#addls").click(function(){
 	if(tag){
 		$.ajax({
 			type:"POST",
-			url:"http://localhost:1701/addls",
+			url:"http://localhost:1701/goodaddls",
 			data:{
 				name:t.eq(0).val(),
 				type:t.eq(1).val(),

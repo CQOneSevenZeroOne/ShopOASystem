@@ -2,7 +2,7 @@ $("#searchls").click(function(e){
 	e.preventDefault();
 	$.ajax({
 		type:"POST",
-		url:"http://localhost:1701/searchId",
+		url:"http://localhost:1701/goodsearchId",
 		data:{
 			name:$("#txt").val()
 		},
@@ -34,7 +34,7 @@ $("tbody").on("dblclick","td",function(e){
 $("tbody").on("click","#update",function(){
 	$.ajax({
 		type:"POST",
-		url:"http://localhost:1701/update",
+		url:"http://localhost:1701/goodupdate",
 		data:{
 			id:$(this).parent().children().eq(0).html(),
 			name:$(this).parent().children().eq(1).html(),
