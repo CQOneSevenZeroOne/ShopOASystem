@@ -5,6 +5,7 @@ $("#title_admin").load("title.html",function(){
 			
 			var href =location.href;
 			if(/orderlist.html/.test(href)){
+				console.log($(".ullist li").eq(1));
 				$(".ullist li").eq(1).addClass("layui-nav-item layui-nav-itemed").siblings().removeClass("layui-nav-itemed");
 			}
 			
