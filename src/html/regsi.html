@@ -1,41 +1,83 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>注册商家</title>
+	<meta charset="utf-8">
+	<title>注册</title>
+<link rel="stylesheet" href="../css/regsi.css">
+<link rel="stylesheet" href="../js/plugins/layui/css/layui.css" media="all">
 </head>
 <body>
-	<div class="Box">
-	    <div class="add_content">
-	        <div class="content_head">
-	            <p>商家注册信息</p>
-	        </div>
-	        <div class="add_info">
-	            <p>商家名称：<input type="text" id="shop_name"><span id="shop_name_span" style="display: none;    margin-right: 55px;">名称已经存在，请重新输入</span></p>
-	            <p>密码：<input type="text" id="shop_password"></p>
-	            <p>注册时间：<input type="text" id="shop_time"></p>
-	            <p>商家简介：<input type="text" id="shop_introduce"></p>
-	            <p>商家地址：<input type="text" id="shop_place"></p>  
-	            <p>商家电话：<input type="text" id="shop_tel"></p>
-	            <form id="uploadForm">
-	            	<span>logo文件：</span>
-			        <input type="file" id="file" name="logo" multiple />
-			    </form>
-	            <div class="add_reg">确定注册</div>
-	        </div>
-	    </div>
-	    
+	<div class="body-bg">
+		<div class="title1"><span>SHOPOASYSTEM</span><span>注册</span></div>
+		<form class="layui-form" action="">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">用户名</label>
+					<div class="layui-input-inline">
+						<input type="tel" autocomplete="off" class="layui-input" id="shop_name">
+					</div>
+					<div class="layui-form-mid layui-word-aux" id="layui-form-name" style="display: none;color:red">用户名已经存在</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">密码</label>
+					<div class="layui-input-inline">
+						<input type="password" name="password" lay-verify="pass" placeholder="6-12位" autocomplete="off" class="layui-input"
+						id="shop_password">
+					</div>
+					<div class="layui-form-mid layui-word-aux" id="layui-form-mid" style="display: none;color:red">请正确输入密码格式</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">再次输密码</label>
+					<div class="layui-input-inline">
+						<input type="password" name="password" lay-verify="pass" placeholder="请输入密码" autocomplete="off" class="layui-input"
+						id="shop_password_repeat">
+					</div>
+					<div class="layui-form-mid layui-word-aux" id="layui-form-m" style="display: none;color:red">两次密码不怎么一样</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">商家简介</label>
+					<div class="layui-input-inline">
+						<input type="tel" class="layui-input" id="shop_introduce">
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">商家地址</label>
+					<div class="layui-input-inline">
+						<input type="text" name="email" autocomplete="off" class="layui-input" id="shop_place">
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">商家电话</label>
+					<div class="layui-input-inline">
+						<input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input" id="shop_tel">
+					</div>
+					<div class="layui-form-mid layui-word-aux" id="layui-form-t" style="display: none;color:red">请输入正确的手机号</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">注册日期</label>
+					<div class="layui-input-inline">
+						<input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+			</div>
+
+			
+			
+		</form>
+		<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-submit="" lay-filter="demo1" id="add_reg">立即提交</button>
+					<button type="reset" class="layui-btn layui-btn-primary" id="resetbtn">重置</button>
+				</div>
+			</div>
 	</div>
-	<div class="mask" id="mask">
-    	<div class="mask1"></div>
-    	<div class="list">
-    		<span>注册成功！！</span>
-    		<p><a href="">登录</a></p>
-    	</div>
-    </div>
 </body>
 </html>
+<script src="../js/lib/jquery-3.2.1.js"></script>
+<script src="../js/plugins/layui/layui.js"></script>
 
-
-<link rel="stylesheet" type="text/css" href="../css/regsi.css">
-<script type="text/javascript" src="../js/lib/jquery-3.2.1.js"></script>
 <script type="text/javascript" src="../js/js/regsi.js"></script>
