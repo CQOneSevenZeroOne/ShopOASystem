@@ -34,7 +34,7 @@ $(".butt").on("click",function(){
 	}
 	if($("#sellerPhone").val()!=""){
 		if( /^[0-9]{1,}$/.test($("#sellerPhone").val())){
-			obj.sellerId=$("#sellerPhone").val();
+			obj.sellerPhone=$("#sellerPhone").val();
 		}else{
 			layui.use('layer', function(){ 
 			layer.msg('电话输入格式不正确,搜索电话无效');
