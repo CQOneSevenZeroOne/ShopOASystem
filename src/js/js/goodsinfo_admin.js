@@ -3,7 +3,6 @@ layui.use('form', function(){
 })
 
 //将数据库中的数据进行保存
-var arr={}
 //页面最开始对ajax的请求
 $.ajax({
 			url:"http://localhost:1701/goodinfo_admin",
@@ -11,8 +10,15 @@ $.ajax({
 			data:{
 			},
            	success: function (data) {
-                    arr = JSON.parse(data);
-					getList(arr);
+                  var  arr = JSON.parse(data);
+                  var arr1=norepeat(arr);
+									var str1="<option value='全部类型' selected=''>全部类型</option>";
+									for(var i in arr1){
+										str1+="<option value='"+arr1[i]+"' >"+arr1[i]+"</option>";
+									}
+									$("#goodType").html(str1);
+									getList(arr);
+									
                 }
 })
 
@@ -46,8 +52,8 @@ $("#butt").click(function(){
 	if($("#goodStatus").val()!="-1"){
 		obj.goodStatus=$("#goodStatus").val();
 	}
-	if($("#goodType").val()!="全部类型"){
-		obj.goodType=$("#goodType").val();
+if($("#goodType").val()!="全部类型"){
+		obj.goodType=$("#goodType").val();console.log($("#goodType").val())
 	}
 	$.ajax({
 			url:"http://localhost:1701/goodinfo_admin/find",
@@ -60,8 +66,8 @@ $("#butt").click(function(){
 				goodType:obj.goodType
 			},
            	success: function (data) {
-                 arr = JSON.parse(data);
-					getList(arr);
+                 var arr = JSON.parse(data);
+								getList(arr);
                 }
 	})
 })
@@ -74,12 +80,8 @@ function getList(arr){
 			layer.msg('未查询到相关用户信息');
 		})
 	}else{
-		var arr1=norepeat(arr);
-		var str1="<option value='全部类型' selected=''>全部类型</option>";
-		for(var i in arr1){
-			str1+="<option value='"+arr1[i]+"' >"+arr1[i]+"</option>";
-		}
-		$("#goodType").html(str1);
+		
+		
 		layui.use('laypage', function(){
 				  var laypage = layui.laypage;
 				  //执行一个laypage实例
@@ -101,6 +103,7 @@ function getList(arr){
 							}
 							src+='<tr><td data-id='+arr[i].goodId+'>'+arr[i].goodId+'</td><td><img src='+arr[i].goodImg+'/></td><td>'+arr[i].goodName+'</td><td>'+arr[i].goodType+'</td><td>'+goodStatus+'</td><td>'+arr[i].pubDate+'</td><td>'+arr[i].goodPrice+'</td><td>'+arr[i].stock+'</td><td>'+arr[i].saleNum+'</td></tr>';
 						}
+						
 						$("#table_list").html(src);
 					}
 				  })
