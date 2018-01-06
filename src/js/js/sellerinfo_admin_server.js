@@ -33,6 +33,7 @@ app.get("/goodinfo_admin",function(req,res){
 				res.send(JSON.stringify(results));
 		})
 })
+
 //对seller表进行查询操作
 app.get("/sellerinfo_admin/find",function(req,res){
 	 res.append("Access-Control-Allow-Origin","*");
@@ -46,7 +47,7 @@ app.get("/sellerinfo_admin/find",function(req,res){
 				sql+=i+"='"+req.query[i]+"' and ";
 			}
 		}
-		var sql = sql.substr(0,sql.length-4);
+		sql = sql.substr(0,sql.length-4);
 			connection.query(sql,function(error,results,fields){
 				if (error) throw error;
 				res.send(JSON.stringify(results));
@@ -65,7 +66,7 @@ app.get("/userinfo_admin/find",function(req,res){
 				sql+=i+"='"+req.query[i]+"' and ";
 			}
 		}
-		var sql = sql.substr(0,sql.length-4);
+		sql = sql.substr(0,sql.length-4);
 			connection.query(sql,function(error,results,fields){
 				if (error) throw error;
 				res.send(JSON.stringify(results));
@@ -84,7 +85,7 @@ app.get("/goodinfo_admin/find",function(req,res){
 				sql+=i+"='"+req.query[i]+"' and ";
 			}
 		}
-		var sql = sql.substr(0,sql.length-4);
+		sql = sql.substr(0,sql.length-4);
 			connection.query(sql,function(error,results,fields){
 				if (error) throw error;
 				res.send(JSON.stringify(results));
@@ -123,13 +124,23 @@ app.get("/sellerinfo_admin/exam/regect",function(req,res){
 				
 		})
 })
-/*//post请求体模块
+//post请求体模块
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.post("/post",function(req,res){
+//管理员的登录
+app.post("/reg_admin",function(req,res){
 	res.append("Access-Control-Allow-Origin","*");
 	//req.body是post传输的数据
-	res.send(JSON.stringify(req.body));
-})*/
+	var sql="select adminName from admininfo where "
+	for(var i in req.body){
+		sql+=i+"='"+req.body[i] +"'and ";
+	}
+	sql = sql.substr(0,sql.length-4);
+	 connection.query(sql,function(error,results,fields){
+				if (error) throw error;
+				res.send(JSON.stringify(results));
+				
+		})
+})
 app.listen(1701);
