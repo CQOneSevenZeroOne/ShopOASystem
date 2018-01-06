@@ -23,7 +23,7 @@ layui.use(['form', 'layedit', 'laydate'], function(){
     url:"http://localhost:1701/orderlist",
     type:"GET",
     data:{
-      "cookId":JSON.parse($.cookie("seller")).id;
+      "cookId":JSON.parse($.cookie("seller")).id
     },
     success:function(data){
         data=JSON.parse(data);
