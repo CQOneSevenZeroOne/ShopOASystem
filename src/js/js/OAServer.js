@@ -324,10 +324,47 @@ app.post("/goodaddls",function(req,res){
 		res.send("价格，库存，运费存在输入不符合要求");
 	}
 })
-
-
-
 /*-----------end-------------*/
+
+/*-----------------huchong----------------*/
+app.get('/reg/checkuser', function(req, res) {
+    console.log("QWER")
+    res.append("Access-Control-Allow-Origin","*");
+    // console.log(req.query)
+    var str12 = `SELECT * FROM seller where sellerName = '${req.query.name}'`;
+    connection.query(str12, function (error, results, fields) {
+
+        console.log(str12)
+            if (error) throw error;
+                //返回一个数据
+                // console.log(results)
+            if(results==''){
+                //表示没有找到
+                res.send("1")
+            }else{
+            	res.send("0")
+            }
+            
+        });
+});
+//向数据库里面添加数据
+app.post('/reg/adduser/', function(req, res) {
+    res.append("Access-Control-Allow-Origin","*");
+    // console.log(req.body.name)
+    // connection.query(`INSERT INTO stuendt4(name, password,time,introduce,place,tel) VALUES ('${req.body.name}','${req.body.password}','${req.body.time}','${req.body.introduce}','${req.body.place}','${req.body.tel}',)`, function (error, results, fields) {
+        var str11 = `INSERT INTO seller (sellerName, sellerPass,regTime,sellerInfo,sellerAddress,sellerPhone,sellerStatus,sellerImg) VALUES ('${req.body.name}',${req.body.password},'${req.body.time}','${req.body.introduce}','${req.body.place}',${req.body.tel},0,'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1018364764,1223529536&fm=27&gp=0.jpg')`;
+        // var str11 =`INSERT INTO student4 (name, id) VALUES ('${req.body.name}',${req.body.password})`
+
+        connection.query(str11, function (error, results, fields) {
+            console.log(str11)
+        	if (error) throw error;
+        		console.log(results)
+        		res.send('1');
+            });
+    
+});
+/*-----------------end----------------*/
+
 app.listen(1701);
 
 /*liusong*/

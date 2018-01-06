@@ -71,3 +71,6 @@ $("#but_go").click(function(){
                 }
 })
 })
+$("#but_reg").click(function() {
+	location.href=encodeURI("regsi.html" ,"utf-8");
+});
