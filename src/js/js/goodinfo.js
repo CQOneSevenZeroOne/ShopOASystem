@@ -38,6 +38,9 @@ $("tbody").on("click","#down",function(){
 			},
 			success:function(data){
 				$(_this).parent().children().eq(3).html(parseInt(data));
+				layui.use('layer', function(){ 
+				layer.msg('下架成功');
+				})
 			}
 	})
 	}else{
