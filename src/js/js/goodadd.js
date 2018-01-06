@@ -19,8 +19,14 @@ $("#addls").click(function(){
 				seller:getCookie().id
 			},
 			success:function(data){
-				alert(data);
+				layui.use('layer', function(){ 
+			layer.msg(data);
+		})
 			}
+		})
+	}else{
+		layui.use('layer', function(){ 
+			layer.msg('请填写完整');
 		})
 	}
 })

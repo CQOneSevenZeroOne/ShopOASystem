@@ -41,7 +41,9 @@ $("tbody").on("click","#down",function(){
 			}
 	})
 	}else{
-		alert("此商品已下架");
+		layui.use('layer', function(){ 
+			layer.msg('此商品已下架');
+		})
 	}
 		
 })

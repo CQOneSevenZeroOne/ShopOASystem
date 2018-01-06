@@ -28,7 +28,9 @@ $("tbody").on("dblclick","td",function(e){
 			$(_this).html(value);
 		})
 	}else{
-		alert("此项不可修改");
+		layui.use('layer', function(){ 
+			layer.msg('此项不可修改');
+		})
 	}
 })
 
@@ -52,7 +54,9 @@ $("tbody").on("click","#update",function(){
 		},
 		success:function(data){
 			if(data=="success"){
-				alert("修改成功");
+				layui.use('layer', function(){ 
+			layer.msg('修改成功');
+		})
 			}
 		}
 	})
