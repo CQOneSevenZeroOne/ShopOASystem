@@ -15,7 +15,8 @@ $("#addls").click(function(){
 				info:t.eq(4).val(),
 				size:t.eq(5).val(),
 				color:t.eq(6).val(),
-				fare:t.eq(7).val()
+				fare:t.eq(7).val(),
+				seller:getCookie().id
 			},
 			success:function(data){
 				alert(data);
@@ -33,4 +34,9 @@ function isNull(t){
 		}
 	}
 	return flag;
+}
+
+function getCookie(){
+	var str = $.cookie("seller");
+	return JSON.parse(str);
 }

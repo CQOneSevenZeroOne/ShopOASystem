@@ -4,7 +4,8 @@ $("#searchls").click(function(e){
 		type:"POST",
 		url:"http://localhost:1701/goodsearchId",
 		data:{
-			name:$("#txt").val()
+			name:$("#txt").val(),
+			seller:getCookie().id
 		},
 		success:function(data){
 			$("tbody").html(data);
@@ -56,3 +57,7 @@ $("tbody").on("click","#update",function(){
 		}
 	})
 })
+function getCookie(){
+	var str = $.cookie("seller");
+	return JSON.parse(str);
+}

@@ -22,7 +22,8 @@ app.get('/goodinfo', function(req, res) {
     res.append("Access-Control-Allow-Origin","*");
    var query = url.parse(req.url).query;
 	var obj = querystring.parse(query);
-	connection.query(`select * from good where sellerId = 1`,function(error,result){
+	/*console.log(obj.seller);*/
+	connection.query(`select * from good where sellerId = ${obj.seller}`,function(error,result){
 		if(error) throw error;
 		
 		var str = restr(result);
@@ -34,7 +35,7 @@ app.get('/goodinfo', function(req, res) {
 app.post('/goodsearch', function(req, res) {
     res.append("Access-Control-Allow-Origin","*");
 	/*console.log(req.body);*/
-	connection.query(`select * from good where goodName like '%${req.body.name}%' and sellerId=1`,function(error,result){
+	connection.query(`select * from good where goodName like '%${req.body.name}%' and sellerId=${req.body.seller}`,function(error,result){
 		if(error) throw error;
 		if(result.length==0){
 			res.send("未查询到");
@@ -49,7 +50,7 @@ app.post('/goodsearch', function(req, res) {
 app.post('/goodsearchId', function(req, res) {
     res.append("Access-Control-Allow-Origin","*");
 	/*console.log(req.body);*/
-	connection.query(`select * from good where goodId = ${req.body.name} and sellerId=1 `,function(error,result){
+	connection.query(`select * from good where goodId = ${req.body.name} and sellerId=${req.body.seller} `,function(error,result){
 		if(error) throw error;
 		if(result.length==0){
 			res.send("未查询到");
@@ -95,8 +96,10 @@ app.post("/goodupdate",function(req,res){
 	if(req.body.status!=0&&req.body.status!=1){
 		req.body.status=1;
 	}
-	connection.query(`update good set goodName = '${req.body.name}',goodType='${req.body.type}',goodStatus='${req.body.status}',goodPrice='${req.body.price}',stock='${req.body.stock}',saleNum='${req.body.salenum}',goodInfo='${req.body.message}',goodSize='${req.body.size}',goodColor='${req.body.color}',goodFare='${req.body.fare}' where goodId='${req.body.id}' and sellerId='${req.body.seller}'`);
-	res.send("success");
+	connection.query(`update good set goodName = '${req.body.name}',goodType='${req.body.type}',goodStatus='${req.body.status}',goodPrice='${req.body.price}',stock='${req.body.stock}',saleNum='${req.body.salenum}',goodInfo='${req.body.message}',goodSize='${req.body.size}',goodColor='${req.body.color}',goodFare='${req.body.fare}',sellerId=${req.body.seller} where goodId=${req.body.id}`,function(error,result){
+		if(error) throw error;
+		res.send("success");
+	});
 })
 
 //添加商品
@@ -109,7 +112,7 @@ app.post("/goodaddls",function(req,res){
 	/*console.log(reg.test(r.color));*/
 	if(r.price>=0&&stock>=0&&r.fare>=0){
 		if(reg.test(r.color)){
-			connection.query(`insert into good(goodName,goodType,goodStatus,pubDate,goodPrice,stock,saleNum,goodInfo,goodImg,goodSize,goodColor,goodFare,sellerId) values ('${r.name}','${r.type}',1,'${time}','${r.price}',${stock},0,'${r.info}','https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2076589134,289598735&fm=27&gp=0.jpg','${r.size}','${r.color}','${r.fare}',1)`,function(error,result){
+			connection.query(`insert into good(goodName,goodType,goodStatus,pubDate,goodPrice,stock,saleNum,goodInfo,goodImg,goodSize,goodColor,goodFare,sellerId) values ('${r.name}','${r.type}',1,'${time}','${r.price}',${stock},0,'${r.info}','https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2076589134,289598735&fm=27&gp=0.jpg','${r.size}','${r.color}','${r.fare}',${r.seller})`,function(error,result){
 				if(error) throw error;
 				res.send("添加成功");
 			})
@@ -163,3 +166,5 @@ function buling(num){
 	}
 	return num;
 }
+
+

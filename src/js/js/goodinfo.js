@@ -1,6 +1,9 @@
 $.ajax({
 	type:"GET",
 	url:"http://localhost:1701/goodinfo",
+	data:{
+		seller:getCookie().id
+	},
 	success:function(data){
 		$("tbody").html(data);
 	}
@@ -12,7 +15,8 @@ $("#searchls").click(function(e){
 		type:"POST",
 		url:"http://localhost:1701/goodsearch",
 		data:{
-			name:$("#txt").val()
+			name:$("#txt").val(),
+			seller:getCookie().id
 		},
 		success:function(data){
 			$("tbody").html(data);
@@ -30,6 +34,7 @@ $("tbody").on("click","#down",function(){
 			url:"http://localhost:1701/gooddown",
 			data:{
 				id:$(this).parent().children().eq(0).html(),
+				seller:getCookie().id
 			},
 			success:function(data){
 				$(_this).parent().children().eq(3).html(parseInt(data));
@@ -40,3 +45,7 @@ $("tbody").on("click","#down",function(){
 	}
 		
 })
+function getCookie(){
+	var str = $.cookie("seller");
+	return JSON.parse(str);
+}
