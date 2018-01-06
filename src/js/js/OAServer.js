@@ -170,7 +170,7 @@ app.get('/orderlist', function(req, res) {
     res.append("Access-Control-Allow-Origin","*");
     var cookId=req.query.cookId;
     //console.log(cookId)
-    var sql="SELECT a.* ,b.*,c.* ,d.sellerId from orderinfo AS a,good AS b,userinfo as c,seller AS d  WHERE a.goodId=b.goodId AND a.userId=c.userId AND d.sellerId="+cookId;
+    var sql="SELECT a.* ,b.*,c.* ,d.sellerId from orderinfo AS a,good AS b,userinfo as c,seller AS d  WHERE a.goodId=b.goodId AND a.userId=c.userId AND a.sellerId=d.sellerId AND a.sellerId="+cookId;
     //console.log(sql)
     connection.query(sql, function (error, results, fields) {
         if (error) throw error;
@@ -181,10 +181,10 @@ app.get('/orderlist', function(req, res) {
 });
 app.get('/orderlist/searchOrder', function(req, res) {
     res.append("Access-Control-Allow-Origin","*");
-    var sql="SELECT a.* ,b.*,c.* ,d.sellerId from orderinfo AS a,good AS b,userinfo as c,seller AS d  WHERE a.goodId=b.goodId AND a.userId=c.userId AND ";
+    var sql="SELECT a.* ,b.*,c.* ,d.sellerId from orderinfo AS a,good AS b,userinfo as c,seller AS d  WHERE a.goodId=b.goodId AND a.userId=c.userId AND a.sellerId=d.sellerId AND ";
     for(var i in req.query){
         if(i=="cookId" && req.query[i]){
-            sql+="d.sellerId="+req.query.cookId+" AND ";
+            sql+="a.sellerId="+req.query.cookId+" AND ";
         }
         if(i=="orderidtext" && req.query[i]){
             sql+="a.orderId="+req.query.orderidtext+" AND ";
