@@ -16,6 +16,8 @@ if(str){
 			type:str.type
 		},
 		success:function(data){
+			var data = data[0];
+			console.log(data)
 			$("#shop_name").val(data.sellerName)
 			$("#shop_introduce").val(data.sellerInfo)
 			$("#shop_tel").val(data.sellerPhone)
@@ -63,9 +65,6 @@ if(str){
 	//点击立即提交的时候将数据提交上去;
 	$("#add_reg").on("click",function(){
 		if (tel_bs&&password_repeat&&password_bs) {
-			tel_bs = false;
-			password_bs = false;
-			password_repeat = false;
 			$.ajax({
 				url: 'http://localhost:1701/sellerinfoUpdata/senddata',
 				type: 'post',
