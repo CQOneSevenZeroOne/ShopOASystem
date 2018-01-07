@@ -328,7 +328,7 @@ app.post("/goodaddls",function(req,res){
 
 /*-----------------huchong----------------*/
 app.get('/reg/checkuser', function(req, res) {
-    console.log("QWER")
+    // console.log("QWER")
     res.append("Access-Control-Allow-Origin","*");
     // console.log(req.query)
     var str12 = `SELECT * FROM seller where sellerName = '${req.query.name}'`;

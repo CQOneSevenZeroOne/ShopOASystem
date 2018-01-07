@@ -89,7 +89,7 @@ $("#shop_password_repeat").on("blur",function(){
 		password_repeat = true;
 	}
 })
-//用判断电话号码
+//判断电话号码
 $("#shop_tel").on("blur",function(){
 	var str = $("#shop_tel").val();
 	if(!/^1[3|4|5|8][0-9]\d{4,8}$/.test(str)){
