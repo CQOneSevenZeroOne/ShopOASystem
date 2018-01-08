@@ -169,13 +169,10 @@ app.post("/reg_seller",function(req,res){
 app.get('/orderlist', function(req, res) {
     res.append("Access-Control-Allow-Origin","*");
     var cookId=req.query.cookId;
-    //console.log(cookId)
     var sql="SELECT a.* ,b.*,c.* ,d.sellerId from orderinfo AS a,good AS b,userinfo as c,seller AS d  WHERE a.goodId=b.goodId AND a.userId=c.userId AND a.sellerId=d.sellerId AND a.sellerId="+cookId;
-    //console.log(sql)
     connection.query(sql, function (error, results, fields) {
         if (error) throw error;
         var data=JSON.stringify(results);
-        //console.log(data)
         res.send(data)
     });
 });
@@ -203,14 +200,12 @@ app.get('/orderlist/searchOrder', function(req, res) {
     connection.query(sql, function (error, results, fields) {
         if (error) throw error;
         var data=JSON.stringify(results);
-        //console.log(data)
         res.send(data)
     });
 });
 app.get('/orderlist/editOrder', function(req, res) {
     res.append("Access-Control-Allow-Origin","*");
     var orderIdedit=req.query.orderIdedit;
-    //console.log(cookId)
     var sql="UPDATE orderinfo SET orderStatus=0 WHERE orderinfo.orderId ="+orderIdedit;
     connection.query(sql, function (error, results, fields) {
         if (error) throw error;
@@ -223,7 +218,6 @@ app.get('/goodinfo', function(req, res) {
     res.append("Access-Control-Allow-Origin","*");
    var query = url.parse(req.url).query;
 	var obj = querystring.parse(query);
-	/*console.log(obj.seller);*/
 	connection.query(`select * from good where sellerId = ${obj.seller}`,function(error,result){
 		if(error) throw error;
 		
@@ -235,7 +229,6 @@ app.get('/goodinfo', function(req, res) {
 //根据名字查找对应的商品
 app.post('/goodsearch', function(req, res) {
     res.append("Access-Control-Allow-Origin","*");
-	/*console.log(req.body);*/
 	connection.query(`select * from good where goodName like '%${req.body.name}%' and sellerId=${req.body.seller}`,function(error,result){
 		if(error) throw error;
 		if(result.length==0){
@@ -250,7 +243,6 @@ app.post('/goodsearch', function(req, res) {
 //根据id查找对应商品
 app.post('/goodsearchId', function(req, res) {
     res.append("Access-Control-Allow-Origin","*");
-	/*console.log(req.body);*/
 	connection.query(`select * from good where goodId = ${req.body.name} and sellerId=${req.body.seller} `,function(error,result){
 		if(error) throw error;
 		if(result.length==0){
@@ -310,7 +302,6 @@ app.post("/goodaddls",function(req,res){
 	var reg = new RegExp("^(红|橙|黄|绿|蓝|靛|紫|黑|白)色$","gi");
 	var time = stringTime();
 	var stock = parseInt(r.stock);
-	/*console.log(reg.test(r.color));*/
 	if(r.price>=0&&stock>=0&&r.fare>=0){
 		if(reg.test(r.color)){
 			connection.query(`insert into good(goodName,goodType,goodStatus,pubDate,goodPrice,stock,saleNum,goodInfo,goodImg,goodSize,goodColor,goodFare,sellerId) values ('${r.name}','${r.type}',1,'${time}','${r.price}',${stock},0,'${r.info}','https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2076589134,289598735&fm=27&gp=0.jpg','${r.size}','${r.color}','${r.fare}',${r.seller})`,function(error,result){
@@ -328,15 +319,11 @@ app.post("/goodaddls",function(req,res){
 
 /*-----------------huchong----------------*/
 app.get('/reg/checkuser', function(req, res) {
-    // console.log("QWER")
     res.append("Access-Control-Allow-Origin","*");
-    // console.log(req.query)
     var str12 = `SELECT * FROM seller where sellerName = '${req.query.name}'`;
     connection.query(str12, function (error, results, fields) {
-        console.log(str12)
             if (error) throw error;
                 //返回一个数据
-                // console.log(results)
             if(results==''){
                 //表示没有找到
                 res.send("1")
@@ -349,31 +336,20 @@ app.get('/reg/checkuser', function(req, res) {
 //向数据库里面添加数据
 app.post('/reg/adduser/', function(req, res) {
     res.append("Access-Control-Allow-Origin","*");
-    // console.log(req.body.name)
-    // connection.query(`INSERT INTO stuendt4(name, password,time,introduce,place,tel) VALUES ('${req.body.name}','${req.body.password}','${req.body.time}','${req.body.introduce}','${req.body.place}','${req.body.tel}',)`, function (error, results, fields) {
         var str11 = `INSERT INTO seller (sellerName, sellerPass,regTime,sellerInfo,sellerAddress,sellerPhone,sellerStatus,sellerImg) VALUES ('${req.body.name}',${req.body.password},'${req.body.time}','${req.body.introduce}','${req.body.place}',${req.body.tel},0,'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1018364764,1223529536&fm=27&gp=0.jpg')`;
-        // var str11 =`INSERT INTO student4 (name, id) VALUES ('${req.body.name}',${req.body.password})`
-
         connection.query(str11, function (error, results, fields) {
-            console.log(str11)
         	if (error) throw error;
-        		console.log(results)
         		res.send('1');
             });
     
 });
 //获取自己的个人信息
 app.get('/sellerinfoUpdata/getdata', function(req, res) {
-     console.log("QWER")
     res.append("Access-Control-Allow-Origin","*");
-    // console.log(req.query)
-    // var str12 = `SELECT * FROM seller where sellerId = '${req.query.id}'`;
     connection.query(`SELECT * FROM seller where sellerId = '${req.query.id}'`, function (error, results, fields) {
-
-        // console.log(str12)
             if (error) throw error;
                 //返回一个数据
-                console.log(results)
+                //console.log(results)
             if(results==''){
                 //表示没有找到
                 res.send("1")
@@ -386,16 +362,11 @@ app.get('/sellerinfoUpdata/getdata', function(req, res) {
 //修改数据库里面的数据
 app.post('/sellerinfoUpdata/senddata', function(req, res) {
     res.append("Access-Control-Allow-Origin","*");
-    // console.log(req.body)
-
-       var str11 = `UPDATE seller SET sellerInfo = '${req.body.sellerInfo}',sellerAddress = '${req.body.sellerAddress}',sellerPhone=${req.body.sellerPhone},sellerPass= '${req.body.sellerPass}' WHERE sellerName = '${req.body.sellerName}'`
-        // console.log(str11)
-        connection.query(str11, function (error, results, fields) {
-
-        	if (error) throw error;
-        		res.send('1');
-            });
-    
+    var str11 = `UPDATE seller SET sellerInfo = '${req.body.sellerInfo}',sellerAddress = '${req.body.sellerAddress}',sellerPhone=${req.body.sellerPhone},sellerPass= '${req.body.sellerPass}' WHERE sellerName = '${req.body.sellerName}'`
+    connection.query(str11, function (error, results, fields) {
+	if (error) throw error;
+        res.send('1');
+    });   
 });
 
 
