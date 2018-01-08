@@ -333,7 +333,6 @@ app.get('/reg/checkuser', function(req, res) {
     // console.log(req.query)
     var str12 = `SELECT * FROM seller where sellerName = '${req.query.name}'`;
     connection.query(str12, function (error, results, fields) {
-
         console.log(str12)
             if (error) throw error;
                 //返回一个数据
@@ -365,7 +364,7 @@ app.post('/reg/adduser/', function(req, res) {
 });
 //获取自己的个人信息
 app.get('/sellerinfoUpdata/getdata', function(req, res) {
-    // console.log("QWER")
+     console.log("QWER")
     res.append("Access-Control-Allow-Origin","*");
     // console.log(req.query)
     // var str12 = `SELECT * FROM seller where sellerId = '${req.query.id}'`;
@@ -394,7 +393,6 @@ app.post('/sellerinfoUpdata/senddata', function(req, res) {
         connection.query(str11, function (error, results, fields) {
 
         	if (error) throw error;
-
         		res.send('1');
             });
     

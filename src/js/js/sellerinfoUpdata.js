@@ -1,5 +1,5 @@
 //先获取cookie,获取cookid的值。
-var str = $.cookie('statuscookie');
+var str = $.cookie('seller');
 // 判断cookie是否存在
 var password_bs = false;
 var password_repeat = false;
@@ -7,9 +7,8 @@ var tel_bs = false;
 
 if(str){
 	str = JSON.parse(str);
-	console.log(str.id)
 	$.ajax({
-		url: 'http://localhost:1701/sellerinfoUpdata/getdata',
+		url: 'http://10.40.153.231:1701/sellerinfoUpdata/getdata',
 		type: 'GET',
 		data: {
 			id:str.id,
@@ -17,7 +16,6 @@ if(str){
 		},
 		success:function(data){
 			var data = data[0];
-			console.log(data)
 			$("#shop_name").val(data.sellerName)
 			$("#shop_introduce").val(data.sellerInfo)
 			$("#shop_tel").val(data.sellerPhone)
@@ -66,7 +64,7 @@ if(str){
 	$("#add_reg").on("click",function(){
 		if (tel_bs&&password_repeat&&password_bs) {
 			$.ajax({
-				url: 'http://localhost:1701/sellerinfoUpdata/senddata',
+				url: 'http://10.40.153.231:1701/sellerinfoUpdata/senddata',
 				type: 'post',
 				data: {
 					sellerName:$("#shop_name").val(),
