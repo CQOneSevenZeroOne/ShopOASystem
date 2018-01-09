@@ -94,7 +94,7 @@ function getList(arr){
 							}else{
 								sex="女";
 							}
-							src+='<tr><td data-id='+arr[i].userId+'>'+arr[i].userId+'</td><td><img src='+arr[i].userImg+'/></td><td>'+arr[i].userName+'</td><td>'+sex+'</td><td>'+arr[i].birthDay+'</td><td>'+arr[i].userAddress+'</td><td>'+arr[i].phoneNum+'</td></tr>';
+							src+='<tr><td data-id='+arr[i].userId+'>'+arr[i].userId+'</td><td><img src='+arr[i].userImg+'></td><td>'+arr[i].userName+'</td><td>'+sex+'</td><td>'+arr[i].birthDay+'</td><td>'+arr[i].userAddress+'</td><td>'+arr[i].phoneNum+'</td></tr>';
 						}
 						$("#table_list").html(src);
 					}

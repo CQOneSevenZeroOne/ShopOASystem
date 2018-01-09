@@ -101,7 +101,7 @@ function getList(arr){
 							}else{
 								goodStatus="下架";
 							}
-							src+='<tr><td data-id='+arr[i].goodId+'>'+arr[i].goodId+'</td><td><img src='+arr[i].goodImg+'/></td><td>'+arr[i].goodName+'</td><td>'+arr[i].goodType+'</td><td>'+goodStatus+'</td><td>'+arr[i].pubDate+'</td><td>'+arr[i].goodPrice+'</td><td>'+arr[i].stock+'</td><td>'+arr[i].saleNum+'</td></tr>';
+							src+='<tr><td data-id='+arr[i].goodId+'>'+arr[i].goodId+'</td><td><img src='+arr[i].goodImg+'></td><td>'+arr[i].goodName+'</td><td>'+arr[i].goodType+'</td><td>'+goodStatus+'</td><td>'+arr[i].pubDate+'</td><td>'+arr[i].goodPrice+'</td><td>'+arr[i].stock+'</td><td>'+arr[i].saleNum+'</td></tr>';
 						}
 						
 						$("#table_list").html(src);
