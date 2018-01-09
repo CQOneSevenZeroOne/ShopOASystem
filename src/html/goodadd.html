@@ -16,7 +16,7 @@
             <!-- 内容主体区域 -->
 				<div id="goodsinfo1">
 				     <!--用户信息的内容-->
-				     <form class="layui-form" action="" id="fo">
+				     <form class="layui-form" action="" id="fo" name="shop">
 					  <div class="layui-form-item">
 					    <label class="layui-form-label">商品名称</label>
 					    <div class="layui-input-block">
@@ -64,6 +64,12 @@
 					    <div class="layui-input-block">
 					      <input type="text" name="title" required  lay-verify="required" placeholder="请输入商品运费" autocomplete="off" class="layui-input text" >			      
 					    </div>
+					  </div>
+					  <div class="layui-form-item">
+					  	<label class="layui-form-label">商品图片</label>
+					  	<div class="layui-input-block">
+					  		<input type="file" id="file" name="title" nultiple>
+					  	</div>
 					  </div>
 					  <button class="layui-btn" id="addls" type="button">添加</button>
 					 </form>

@@ -102,18 +102,35 @@ $("#shop_tel").on("blur",function(){
 		tel_bs = true;
 	}
 })
-//点击登录按钮时，将用户信息添加到后台
+//点击提交按钮时，将用户信息添加到后台
+var src=[];
+function upload(){
+		$.ajax({
+		url:"http://localhost:1701/upload",
+		type:"POST",
+		async:false,
+		processData:false,
+        contentType:false,
+        cache:false,
+        data:new FormData($("#sellerreg")[0]),
+        success:function(data){
+        	src.push(data);
+        }
+	});
+	return src;
+}
 $("#add_reg").on("click",function(){
 	if(name_bs&&password_bs&&password_repeat&&tel_bs){
 		name_bs = false;
 		password_bs = false;
 		password_repeat = false;
 		tel_bs = false;
-		console.log($("#date").val())
-
+		var path=upload();
+		var str=path[0];
 		$.ajax({
 			url:"http://localhost:1701/reg/adduser/",
 			type:"post",
+			async:false,
 			data:{
 				// id:$("#shop_id").val(),
 				name:$("#shop_name").val(),
@@ -121,7 +138,8 @@ $("#add_reg").on("click",function(){
 				time:$("#date").val(),
 				introduce:$("#shop_introduce").val(),
 				place:$("#shop_place").val(),
-				tel:$("#shop_tel").val()
+				tel:$("#shop_tel").val(),
+				img:str
 			},
 			success:function(data){
 				// location.herf = url;

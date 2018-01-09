@@ -8,7 +8,13 @@ $("#searchls").click(function(e){
 			seller:getCookie().id
 		},
 		success:function(data){
-			$("tbody").html(data);
+			if(data=="未查询到"){
+				layui.use('layer', function(){ 
+			layer.msg(data);
+		})
+			}else{
+				$("tbody").html(data);
+			}	
 		}
 	})
 })

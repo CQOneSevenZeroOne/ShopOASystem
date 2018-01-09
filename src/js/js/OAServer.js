@@ -1,9 +1,11 @@
 var express = require("express");
 var mysql = require("mysql");
 var url = require("url");
+var multer = require ("multer");
 var querystring  = require("querystring");
 //实例化express
 var app = express();
+app.use(express.static('../public'));
 var connection = mysql.createConnection({
 		host:"10.40.153.231",
 		user:"jian",
@@ -302,9 +304,10 @@ app.post("/goodaddls",function(req,res){
 	var reg = new RegExp("^(红|橙|黄|绿|蓝|靛|紫|黑|白)色$","gi");
 	var time = stringTime();
 	var stock = parseInt(r.stock);
+	console.log(req.body)
 	if(r.price>=0&&stock>=0&&r.fare>=0){
 		if(reg.test(r.color)){
-			connection.query(`insert into good(goodName,goodType,goodStatus,pubDate,goodPrice,stock,saleNum,goodInfo,goodImg,goodSize,goodColor,goodFare,sellerId) values ('${r.name}','${r.type}',1,'${time}','${r.price}',${stock},0,'${r.info}','https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2076589134,289598735&fm=27&gp=0.jpg','${r.size}','${r.color}','${r.fare}',${r.seller})`,function(error,result){
+			connection.query(`insert into good(goodName,goodType,goodStatus,pubDate,goodPrice,stock,saleNum,goodInfo,goodImg,goodSize,goodColor,goodFare,sellerId) values ('${r.name}','${r.type}',1,'${time}','${r.price}',${stock},0,'${r.info}','http://10.40.153.231:88/project/ShopOASystem/src/public/${r.img}','${r.size}','${r.color}','${r.fare}',${r.seller})`,function(error,result){
 				if(error) throw error;
 				res.send("添加成功");
 			})
@@ -336,7 +339,7 @@ app.get('/reg/checkuser', function(req, res) {
 //向数据库里面添加数据
 app.post('/reg/adduser/', function(req, res) {
     res.append("Access-Control-Allow-Origin","*");
-        var str11 = `INSERT INTO seller (sellerName, sellerPass,regTime,sellerInfo,sellerAddress,sellerPhone,sellerStatus,sellerImg) VALUES ('${req.body.name}',${req.body.password},'${req.body.time}','${req.body.introduce}','${req.body.place}',${req.body.tel},0,'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1018364764,1223529536&fm=27&gp=0.jpg')`;
+        var str11 = `INSERT INTO seller (sellerName, sellerPass,regTime,sellerInfo,sellerAddress,sellerPhone,sellerStatus,sellerImg) VALUES ('${req.body.name}',${req.body.password},'${req.body.time}','${req.body.introduce}','${req.body.place}',${req.body.tel},0,'http://10.40.153.231:88/project/ShopOASystem/src/public/${req.body.img}')`;
         connection.query(str11, function (error, results, fields) {
         	if (error) throw error;
         		res.send('1');
@@ -362,7 +365,7 @@ app.get('/sellerinfoUpdata/getdata', function(req, res) {
 //修改数据库里面的数据
 app.post('/sellerinfoUpdata/senddata', function(req, res) {
     res.append("Access-Control-Allow-Origin","*");
-    var str11 = `UPDATE seller SET sellerInfo = '${req.body.sellerInfo}',sellerAddress = '${req.body.sellerAddress}',sellerPhone=${req.body.sellerPhone},sellerPass= '${req.body.sellerPass}' WHERE sellerName = '${req.body.sellerName}'`
+    var str11 = `UPDATE seller SET sellerInfo = '${req.body.sellerInfo}',sellerAddress = '${req.body.sellerAddress}',sellerPhone=${req.body.sellerPhone},sellerPass= '${req.body.sellerPass}',sellerImg= '${req.body.img}' WHERE sellerName = '${req.body.sellerName}'`
     connection.query(str11, function (error, results, fields) {
 	if (error) throw error;
         res.send('1');
@@ -371,6 +374,28 @@ app.post('/sellerinfoUpdata/senddata', function(req, res) {
 
 
 /*-----------------end----------------*/
+
+var storage = multer.diskStorage({
+	//存储文件地方
+	destination:function(req,res,cb){
+		cb(null,"../../public");
+	},
+	//存储文件名字
+	filename: function (req, file, cb) {
+        console.log(file.originalname.split("."))
+        var fileFormat = file.originalname.split(".");
+        cb(null, file.fieldname + '-' + Date.now() + "." + fileFormat[fileFormat.length - 1])
+    }
+})
+//配置上传参数
+var upload = multer({
+	storage:storage
+})
+app.post("/upload",upload.any(),function(req,res){
+	res.append("Access-Control-Allow-Origin","*");
+	res.send(req.files[0].filename);
+	//console.log(req.files[0])
+})
 
 app.listen(1701);
 
@@ -415,3 +440,4 @@ function buling(num){
 	}
 	return num;
 }
+

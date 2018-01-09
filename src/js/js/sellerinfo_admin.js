@@ -194,7 +194,7 @@ function getList(arr){
 								status="已注销";
 							}
 							if(arr[i].sellerStatus!=3){
-							src+='<tr><td data-id='+arr[i].sellerId+'>'+arr[i].sellerId+'</td><td><img src='+arr[i].sellerImg+'/></td><td>'+arr[i].sellerName+'</td><td>'+status+'</td><td>'+arr[i].regTime+'</td><td>'+arr[i].sellerAddress+'</td><td>'+arr[i].sellerPhone+'</td><td id="cancal"><strong>注销</strong></td><td id="exam"><strong>同意</strong><strong>拒绝</strong></td></tr>';
+							src+='<tr><td data-id='+arr[i].sellerId+'>'+arr[i].sellerId+'</td><td><img src='+arr[i].sellerImg+'></td><td>'+arr[i].sellerName+'</td><td>'+status+'</td><td>'+arr[i].regTime+'</td><td>'+arr[i].sellerAddress+'</td><td>'+arr[i].sellerPhone+'</td><td id="cancal"><strong>注销</strong></td><td id="exam"><strong>同意</strong><strong>拒绝</strong></td></tr>';
 							}
 						}
 						$("#table_list").html(src);

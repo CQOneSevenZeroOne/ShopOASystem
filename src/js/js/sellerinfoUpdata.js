@@ -20,6 +20,7 @@ if(str){
 			$("#shop_introduce").val(data.sellerInfo)
 			$("#shop_tel").val(data.sellerPhone)
 			$("#shop_place").val(data.sellerAddress)
+			$("#shop_password").val(data.sellerPass)
 		}
 	})
 	//先判断密码符合
@@ -60,18 +61,38 @@ if(str){
 			tel_bs = true;
 		}
 	})
+	var src=[];
+	function upload(){
+			$.ajax({
+			url:"http://localhost:1701/upload",
+			type:"POST",
+			async:false,
+			processData:false,
+	        contentType:false,
+	        cache:false,
+	        data:new FormData($("#fo")[0]),
+	        success:function(data){
+	        	src.push(data);
+	        }
+		});
+		return src;
+	}
 	//点击立即提交的时候将数据提交上去;
 	$("#add_reg").on("click",function(){
+		var path=upload();
+		var str=path[0];
 		if (tel_bs&&password_repeat&&password_bs) {
 			$.ajax({
 				url: 'http://10.40.153.231:1701/sellerinfoUpdata/senddata',
 				type: 'post',
+				async:false,
 				data: {
 					sellerName:$("#shop_name").val(),
 					sellerInfo:$("#shop_introduce").val(),
 					sellerPhone:$("#shop_tel").val(),
 					sellerAddress:$("#shop_place").val(),
-					sellerPass:$("#shop_password").val()
+					sellerPass:$("#shop_password").val(),
+					img:str
 				},
 				success:function(data){
 					layui.use('layer', function(){ 
