@@ -304,7 +304,6 @@ app.post("/goodaddls",function(req,res){
 	var reg = new RegExp("^(红|橙|黄|绿|蓝|靛|紫|黑|白)色$","gi");
 	var time = stringTime();
 	var stock = parseInt(r.stock);
-	console.log(req.body)
 	if(r.price>=0&&stock>=0&&r.fare>=0){
 		if(reg.test(r.color)){
 			connection.query(`insert into good(goodName,goodType,goodStatus,pubDate,goodPrice,stock,saleNum,goodInfo,goodImg,goodSize,goodColor,goodFare,sellerId) values ('${r.name}','${r.type}',1,'${time}','${r.price}',${stock},0,'${r.info}','http://10.40.153.231:88/project/ShopOASystem/src/public/${r.img}','${r.size}','${r.color}','${r.fare}',${r.seller})`,function(error,result){
@@ -382,7 +381,6 @@ var storage = multer.diskStorage({
 	},
 	//存储文件名字
 	filename: function (req, file, cb) {
-        console.log(file.originalname.split("."))
         var fileFormat = file.originalname.split(".");
         cb(null, file.fieldname + '-' + Date.now() + "." + fileFormat[fileFormat.length - 1])
     }
