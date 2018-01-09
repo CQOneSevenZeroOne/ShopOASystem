@@ -17,7 +17,12 @@ function upload(){
 $("#addls").click(function(){
 	var path=upload();
 	var t = $(".text");
-	var str=path[0];
+	var str='';
+	if(path[0]==''){
+		str='xixixi.jpg';
+	}else{
+		str=path[0];
+	}
 	//调用判断是否为空的方法
 	var tag = isNull(t);
 	//console.log(t.eq(2).val());

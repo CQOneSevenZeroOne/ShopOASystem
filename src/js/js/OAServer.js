@@ -391,7 +391,12 @@ var upload = multer({
 })
 app.post("/upload",upload.any(),function(req,res){
 	res.append("Access-Control-Allow-Origin","*");
-	res.send(req.files[0].filename);
+	if(req.files.length==0){
+		res.send('');
+	}else{
+		res.send(req.files[0].filename);
+	}
+
 	//console.log(req.files[0])
 })
 

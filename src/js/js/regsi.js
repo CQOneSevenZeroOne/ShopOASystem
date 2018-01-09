@@ -126,7 +126,12 @@ $("#add_reg").on("click",function(){
 		password_repeat = false;
 		tel_bs = false;
 		var path=upload();
-		var str=path[0];
+		var str='';
+		if(path[0]==''){
+			str='xixixi.jpg';
+		}else{
+			str=path[0];
+		}
 		$.ajax({
 			url:"http://localhost:1701/reg/adduser/",
 			type:"post",
